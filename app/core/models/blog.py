@@ -94,9 +94,10 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         # pre-save
         # creation = self._state.adding
+        self.timestamp = timezone.now()
         self.full_clean()
+
         super().save(*args, **kwargs)
-        # post save
 
     def clean(self):
         # validate fields required for publish
