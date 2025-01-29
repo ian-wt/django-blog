@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.db import IntegrityError
 
@@ -122,3 +123,9 @@ class TestUser(TestCase):
             str(self.user.user_profile),
             f"{self.user.first_name} {self.user.last_name}'s Profile"
         )
+
+    def test_user_profile_timezone(self):
+        profile = getattr(self.user, 'user_profile')
+        profile.timezone = 'NOT A TIMEZONE'
+        with self.assertRaises(ValidationError):
+            profile.save()
