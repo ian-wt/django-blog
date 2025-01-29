@@ -116,3 +116,8 @@ class UserProfile(models.Model):
     def __str__(self):
         # noinspection PyUnresolvedReferences
         return f"{self.user.first_name} {self.user.last_name}'s Profile"
+
+    def save(self, *args, **kwargs):
+        self.full_clean()  # required for custom validators to run
+
+        super().save(*args, **kwargs)
