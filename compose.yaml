@@ -3,7 +3,7 @@ services:
     build:
       context: .
       args:
-        - DEV=trued
+        - DEV=true
     ports:
       - "8000:8000"
 #    environment:
