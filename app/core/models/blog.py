@@ -100,6 +100,7 @@ class Post(models.Model):
         super().save(*args, **kwargs)
 
     def clean(self):
+        # TODO: group errors and raise validation error at the end if any
         # validate fields required for publish
         if self.published_at:
             errors = {}
