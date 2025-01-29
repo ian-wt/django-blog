@@ -5,9 +5,13 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager, PermissionsMixin
 )
-
+from django.core.exceptions import ValidationError
 from django.utils import timezone
 
+# use for form choices
+# don't pass directly as choices to the user profile timezone field
+# doing so will cause unecessary migrations
+# instead, check with validation
 TIMEZONES = tuple(zip(
     zoneinfo.available_timezones(),
     zoneinfo.available_timezones()
@@ -86,6 +90,11 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.last_name[0].upper()
         )
 
+def validate_timezone(value):
+    if value not in (tz[0] for tz in TIMEZONES):
+        raise ValidationError(_(f'Provided timezone {value} is not valid.'))
+
+
 
 class UserProfile(models.Model):
     """
@@ -98,8 +107,8 @@ class UserProfile(models.Model):
     )
     timezone = models.CharField(
         max_length=32,
-        choices=TIMEZONES,
-        default='UTC'
+        default='UTC',
+        validators=[validate_timezone,]
     )
 
     objects = models.Manager()
