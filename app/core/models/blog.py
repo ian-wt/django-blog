@@ -111,8 +111,8 @@ class Post(models.Model):
             ]
             for field in required_fields:
                 if not getattr(self, field):
-                    errors[field] = _(f'{field.replace("_", " ")
-                                      .title()} is required to publish.')
+                    errors[field] = _(f'{field.replace("_", " ").title()} '
+                                      f'is required to publish.')
             if errors:
                 raise ValidationError(errors)
 
