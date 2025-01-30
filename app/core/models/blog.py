@@ -9,11 +9,10 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 
 
-# noinspection PyUnusedLocal
-def cover_image_file_path(instance, filename):
+def cover_image_file_path(_, filename):
     ext = os.path.splitext(filename)[1]
     filename = f'{uuid.uuid4()}{ext}'
-    return os.path.join('article-cover-images', filename)
+    return os.path.join('post-cover-images', filename)
 
 
 class PostAuthor(models.Model):
