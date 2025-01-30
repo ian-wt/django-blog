@@ -1,6 +1,5 @@
 import datetime
 import uuid
-from uuid import UUID
 from copy import deepcopy
 
 from django.test import TestCase
@@ -13,7 +12,6 @@ from faker import Faker
 
 from core.tests.factories import UserFactory
 from core.models import Post
-from core.models.blog import cover_image_file_path
 
 
 fake = Faker()
@@ -62,7 +60,7 @@ class TestPost(TestCase):
         with self.assertRaisesMessage(
             ValidationError,
             f'{missing_field.replace("_", " ").title()} is required to publish.'
-        ) as cm:
+        ):
             # set published
             self.blog_post.published_at = timezone.now()
             self.blog_post.save()
