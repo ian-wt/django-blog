@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% block meta_title %}Django Blog{% endblock %}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="description" content="{% block meta_description %}{% endblock %}"/>
+
+  <!-- ** favicon ** -->
+  {% include 'favicon.html' %}
+
+  <!-- css -->
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <!-- ** page specific sheets ** -->
+  {% block stylesheets %}{% endblock %}
+  <!-- END css -->
+
+  <!-- scripts -->
+  <script src="{% static 'js/main.js' %}" defer></script>
+  <!-- ** page specific scripts ** -->
+  {% block javascript %}{% endblock %}
+  <!-- END scripts -->
+</head>
+<body>
+  {% include 'header.html' %}
+  <div class="page-container">{% block content %}{% endblock %}</div>
+  {% include 'footer.html' %}
+</body>
+</html>
