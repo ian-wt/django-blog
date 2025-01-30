@@ -120,8 +120,8 @@ class Post(models.Model):
         # validate updated > published
         if self.published_at and self.updated_at \
             and (self.published_at >= self.updated_at):
-            raise ValidationError(_(f'Update {self.updated_at} cannot occur'
-                                    f'before Puplish {self.created_at}.'))
+            raise ValidationError(_(f'Update {self.updated_at} cannot occur '
+                                    f'before publish {self.published_at}.'))
 
         # slugify title when published
         if self.published_at and not self.slug:
