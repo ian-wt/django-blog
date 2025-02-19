@@ -52,6 +52,11 @@ INSTALLED_APPS = [
     'core'
 ]
 
+if DEBUG:
+    INSTALLED_APPS += [
+        'django_sass'
+    ]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
