@@ -1,3 +1,9 @@
+# ** PROJECT SPECIFIC IGNORE **
+
+node_modules
+
+# ** TEMPLATE IGNORE **
+
 .idea/
 app/files
 
