@@ -1,0 +1,10 @@
+{
+  "name": "django-blog",
+  "version": "0.0.0",
+  "scripts": {
+    "compile:sass": "sass --watch --no-source-map app/staticfiles/scss/main.scss app/staticfiles/css/main.css"
+  },
+  "devDependencies": {
+    "sass": "^1.85.1"
+  }
+}
