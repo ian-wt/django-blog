@@ -1,0 +1,77 @@
+# ** CUSTOM IGNORE **
+
+# npm
+node_modules
+package.json
+package-lock.json
+
+# only include compiled css in container
+*.scss
+
+# ** TEMPLATE IGNORE BELOW **
+
+# Ignore IDE settings
+.idea/
+.vscode/
+
+# Ignore Django-specific generated files
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Ignore bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Ignore Python package metadata
+.Python
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Ignore dependency caches
+node_modules/
+#package-lock.json
+pdm.lock
+poetry.lock
+
+# Ignore build & distribution artifacts
+build/
+dist/
+wheels/
+share/python-wheels/
+
+# Ignore static source files (only include compiled versions)
+app/staticfiles/scss/
+app/staticfiles/src/
+
+# Ignore container-related files
+docker-compose.override.yml
+Dockerfile
+.pypirc
+
+# Ignore testing/caching artifacts
+.tox/
+.nox/
+.coverage
+.coverage.*
+.pytest_cache/
+htmlcov/
+.mypy_cache/
+.pyre/
+.pytype/
+
+# Ignore Celery-related files
+celerybeat-schedule
+celerybeat.pid
