@@ -2,6 +2,12 @@
 
 node_modules
 *.css.map
+
+# ignore main.css since this is being compiled by sass
+# re-compile in ci/cd
+app/staticfiles/css/main.css
+
+
 # ** TEMPLATE IGNORE **
 
 .idea/
