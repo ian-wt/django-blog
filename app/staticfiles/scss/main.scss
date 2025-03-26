@@ -1,1 +1,18 @@
-@use 'abstracts/colors';
+// abstracts
+//@import 'abstracts/variables';
+
+// vendors
+//@import 'vendors/bootstrap-grid';
+
+// base
+@use 'base/reset';
+//@import 'base/typography';
+
+// partials
+//@import 'partials/header';
+
+// components
+
+// pages
+
+// themes

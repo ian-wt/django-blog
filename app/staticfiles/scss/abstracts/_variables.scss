@@ -29,3 +29,39 @@ $teal: #0cb4ce;
 $teal-light: #4dd5e7;
 $coral: #ff6b6b;
 $coral-light: #ff9b9b;
+
+
+// CSS Properties Conversions
+:root {
+
+  --blue-900: #{$blue-900};
+  --blue-800: #{$blue-800};
+  --blue-700: #{$blue-700};
+  --blue-600: #{$blue-600};
+  --blue-500: #{$blue-500};
+  --blue-400: #{$blue-400};
+  --blue-300: #{$blue-300};
+  --blue-200: #{$blue-200};
+  --blue-100: #{$blue-100};
+
+  // Complementary colors
+  --white: #{$white};
+  --cream: #{$cream};
+  --gray-100: #{$gray-100};
+  --gray-200: #{$gray-200};
+  --gray-300: #{$gray-300};
+  --gray-400: #{$gray-400};
+  --gray-500: #{$gray-500};
+  --gray-600: #{$gray-600};
+  --gray-700: #{$gray-700};
+  --gray-800: #{$gray-800};
+  --gray-900: #{$gray-900};
+
+  // Accent colors
+  --purple: #{$purple};
+  --purple-light: #{$purple-light};
+  --teal: #{$teal};
+  --teal-light: #{$teal-light};
+  --coral: #{$coral};
+  --coral-light: #{$coral-light};
+}
