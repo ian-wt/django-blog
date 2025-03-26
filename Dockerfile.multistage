@@ -1,0 +1,89 @@
+# Base stage
+FROM python:3.12-slim-bookworm AS base
+
+LABEL django-blog.vendor="Waldron Technologies, LLC"
+LABEL django-blog.version="0.0.1"
+LABEL django-blog.authors="ian@waldrontech.co"
+LABEL django-blog.website="ianwaldron.com"
+
+ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
+
+COPY ./requirements.txt /tmp/requirements.txt
+COPY ./scripts /scripts
+
+WORKDIR /app
+
+RUN \
+    # add limited user \
+    adduser \
+        --disabled-password \
+        --no-create-home \
+        django-user && \
+    apt-get update && apt-get install -y \
+    # build deps \
+      python3-dev \
+      libpq-dev \
+      gcc \
+      --no-install-recommends && \
+    # set up python env \
+    python -m venv /py && \
+    /py/bin/pip install --upgrade pip && \
+    /py/bin/pip install --no-cache-dir -r /tmp/requirements.txt && \
+    # permissions
+    chown -R django-user:django-user /scripts && \
+    chmod -R +x /scripts ;
+
+ENV PATH="/py/bin:$PATH"
+USER django-user
+
+# Development stage
+FROM base AS development
+
+# Switch to root user to install packages
+# don't forget to switch back to django-user after
+USER root
+
+COPY ./requirements.dev.txt /tmp/requirements.dev.txt
+COPY ./package.json /package.json
+COPY ./package-lock.json /package-lock.json
+
+RUN \
+    /py/bin/pip install --no-cache-dir -r /tmp/requirements.dev.txt && \
+    # install node
+    apt-get update && apt-get install -y curl && \
+    curl -sL https://deb.nodesource.com/setup_current.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install && \
+    # handle static and media files in development
+    mkdir -p files/static && \
+    chown -R django-user:django-user files/static && \
+    chmod -R 755 files/static && \
+    mkdir -p files/media && \
+    chown -R django-user:django-user files/media && \
+    chmod -R 755 files/media
+
+# Switch back to django-user
+USER django-user
+
+ENV DEV=$DEV
+CMD ["/scripts/entrypoint.sh"]
+
+# Production stage
+FROM base AS production
+
+# Switch to root for cleanup operations
+USER root
+
+RUN \
+    # clean up \
+    apt-get autoremove -y && \
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /tmp
+
+# Switch back to django-user
+USER django-user
+
+ENV DEV=$DEV
+CMD ["/scripts/entrypoint.sh"]

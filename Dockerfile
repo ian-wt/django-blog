@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bookworm
+FROM python:3.12-slim-bookworm as base
 
 LABEL django-blog.vendor="Waldron Technologies, LLC"
 LABEL django-blog.version="0.0.1"
@@ -10,9 +10,11 @@ ENV PYTHONDONTWRITEBYTECODE 1
 
 COPY ./requirements.txt /tmp/requirements.txt
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
-COPY scripts /scripts
+COPY ./scripts /scripts
 
 ARG DEV=false
+
+WORKDIR /app
 
 RUN \
     # add limited user \
@@ -36,6 +38,7 @@ RUN \
     # dev
     if [ $DEV = "true" ]; then \
         /py/bin/pip install --no-cache-dir -r /tmp/requirements.dev.txt && \
+        # handle static and media files in development
         mkdir -p files/static  && \
         chown -R django-user:django-user files/static &&  \
         chmod -R 755 files/static && \
@@ -49,13 +52,9 @@ RUN \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp
 
-WORKDIR /app
-COPY ./app /app
-
 ENV PATH="/py/bin:$PATH"
 ENV DEV=$DEV
 
 USER django-user
-
 CMD ["/scripts/entrypoint.sh"]
 # ^^ if you're not calling this already from your k8s deployment
