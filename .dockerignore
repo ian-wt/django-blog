@@ -2,8 +2,6 @@
 
 # npm
 node_modules
-package.json
-package-lock.json
 
 # only include compiled css in container
 *.scss
