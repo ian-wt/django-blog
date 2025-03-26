@@ -2,7 +2,7 @@
     "name": "Django Blog Development",
     "dockerComposeFile": "../compose.yaml",
     "service": "app",
-    "workspaceFolder": "/app",
     "overrideCommand": false,
-    "remoteUser": "root"
+    "remoteUser": "root",
+    "workspaceFolder": "/app"
 } 

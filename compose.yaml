@@ -2,6 +2,12 @@ services:
   app:
     build:
       context: .
+      # dockerfile: Dockerfile
+      # target: base
+#      swap below for multistage build that has scss compilation
+#         inline with development server
+      dockerfile: Dockerfile.multistage
+      target: development
       args:
         - DEV=true
     ports:
@@ -10,11 +16,14 @@ services:
 #      - PORT=8000
     volumes:
       - ./app:/app
-    command: >
-      sh -c "/scripts/migrate.sh &&
-      /scripts/fixtures.sh &&
-      /scripts/collectstatic.sh &&
-      /scripts/entrypoint.sh"
+    command: |
+      sh -c "
+      /scripts/migrate.sh
+      /scripts/fixtures.sh
+      /scripts/collectstatic.sh
+      # /scripts/entrypoint.sh
+      (npm run compile:sass & /scripts/entrypoint.sh)
+      "
     env_file:
       - .env
     depends_on:
