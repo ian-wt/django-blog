@@ -11,6 +11,7 @@ app/staticfiles/css/main.css
 # ** TEMPLATE IGNORE **
 
 .idea/
+.DS_Store
 app/files
 
 # Byte-compiled / optimized / DLL files
