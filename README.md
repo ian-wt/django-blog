@@ -94,3 +94,31 @@ I left a commented section for an environment variable so if you do want to chan
 ```
 
 If you want to run a multi-service / multi-server approach, update the left side of the 'ports' mapping to a unique value between services. Ex., start the gunicorn on 8000 & start daphne on 8001.
+
+## Working With CSS
+
+This projects is set up to compile a main.css file using sass. While I still rely on Django's static file management to handle template-specific css, I define standard components and introduce third-party items (Bootstraps grid layout) with sass to make development easy.
+
+To handle sass, I have node installed along with dart-sass in the development builds of both Dockerfiles.
+
+The independent Dockerfiles exist to allow flexibiltiy in development. Use one or the other and specify your choice in compose.yaml.
+
+There are two built-in ways to run dart-sass:
+
+1) Start the process independently and outside the container. eg from the project root start the sass process. The app directory containing the sass is mounted in compose so this process can occur outside the container. Or;
+
+2) Run the process in parallel with the development server from within the container. This is the approach contemplated by the second Dockerfile "Dockerfile.multistage" which has independent stages for production and development. In the development stage, the package/lock.json files are copied in and node/dart-sass are installed. The process is then run from the compose.yaml file. This way, you only need a single terminal to see the log outputs from both the sass process and the development server.
+
+The only adjustment needed to choose between these Dockerfiles is to update compose.yaml in two places.
+
+First, specify which Dockerfile to use by name under build. If you're using the multistage build, you also have to specify a target. In the single stage build this is optional since Docker will run all stages (with the result based on the final stage) without a target specified.
+
+Then, update the command directive to either include the sass process or exclude it. The multistage build should have the sass process included since it installs node and dart-sass.
+
+I've entered both ways. Just comment out the way you don't want to go.
+
+If you're trying to access container logs, either with or without sass, that's:
+
+```bash
+docker logs -f <container_name>
+```
