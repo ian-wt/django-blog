@@ -122,3 +122,22 @@ If you're trying to access container logs, either with or without sass, that's:
 ```bash
 docker logs -f <container_name>
 ```
+
+## Different IDEs
+
+Normally, I use Pycharm which uses a native approach to setting up the python environment in Docker (only in the Professional version of Pycharm I believe).
+
+However, in recent years I (and everyone else) am using a bit more Cursor (VSCode), so I've included a simple dev container setup to work with these IDEs. If you're not in an environment that supports dev containers, just delete the .devcontainers directory. 
+
+Otherwise,you can start your dev container from Cursor / VSCode using:
+
+```bash
+CMD + Shift + P
+```
+
+And select "Dev Containers: Rebuild and Reopen In Container"
+
+Since the dev containers approach uses the compose.yaml, you'll have the development server already running as well as the sass process going (if you're using the multistage). Open this in a seperate terminal instance since you can't access this from within the container.
+
+Of course, you could always opt for running ```python manage.py runserver``` from within the dev container. You just may have to specify a different port if you don't prevent compose from running it's own server.
+
