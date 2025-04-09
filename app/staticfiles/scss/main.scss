@@ -1,15 +1,12 @@
 // abstracts
-//@import 'abstracts/variables';
 
 // vendors
-//@import 'vendors/bootstrap-grid';
+@use 'vendors/bootstrap-grid';
 
 // base
 @use 'base/reset';
-//@import 'base/typography';
 
 // partials
-//@import 'partials/header';
 
 // components
 
